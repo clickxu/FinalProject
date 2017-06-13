@@ -12,6 +12,16 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    productFlavors {
+        free {
+            applicationId "com.udacity.gradle.builditbigger.free"
+        }
+        paid {
+            applicationId "com.udacity.gradle.builditbigger.paid"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,16 +30,32 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
-    compile 'com.google.firebase:firebase-ads:10.0.1'
+ext {
+    supportLibVersion = "25.3.1"
+    firebaseVersion = "11.0.0"
+    googleApiVersion = "1.22.0"
+    espressoVersion = "2.2.2"
+    findbugsVersion = "2.0.1"
 }
 
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':stage')
+    compile(project(path: ':jokes', configuration: 'android-endpoints'), {
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    })
+    compile("com.google.api-client:google-api-client-android:$googleApiVersion", {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    })
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.google.code.findbugs:jsr305:$findbugsVersion"
+
+    freeCompile "com.google.firebase:firebase-ads:$firebaseVersion"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
 
 apply plugin: 'com.google.gms.google-services'

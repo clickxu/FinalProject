@@ -18,7 +18,7 @@ import static org.junit.Assert.assertFalse;
 public class JokeTellerAsyncTaskTest {
 
     @Test
-    public void jokesAsyncTask_Free_OK() throws InterruptedException {
+    public void jokesAsyncTaskFreeOK() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         new JokesAsyncTask().execute(
                 new Pair<JokesAsyncTask.CallBack, Boolean>(
@@ -33,7 +33,7 @@ public class JokeTellerAsyncTaskTest {
     }
 
     @Test
-    public void jokesAsyncTask_Paid_OK() throws InterruptedException {
+    public void jokesAsyncTaskPaidOK() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         new JokesAsyncTask().execute(
                 new Pair<JokesAsyncTask.CallBack, Boolean>(
